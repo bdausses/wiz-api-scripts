@@ -26,7 +26,7 @@ QUERY_VARS=$(cat <<EOF
 EOF
 )
 
-# Define functions
+# Define report listing function
 function callAPI {
     curl -s -X POST $WIZ_API_ENDPOINT \
     -H "Content-Type: application/json" \
@@ -36,9 +36,8 @@ function callAPI {
     "query": "query ReportsTable($filterBy: ReportFilters, $first: Int, $after: String) { reports(first: $first, after: $after, filterBy: $filterBy) { nodes { id name type { id name } project { id name } emailTarget { to } parameters { query framework { name } subscriptions { ...ReportParamsEntity } entities { ...ReportParamsEntity } } params { ...ReportParams } lastRun { ...LastRunDetails } nextRunAt runIntervalHours } pageInfo { hasNextPage endCursor } totalCount }} fragment ReportParamsEntity on GraphEntity { id type name properties technologies { id name icon }} fragment ReportParams on ReportParams { ... on ReportParamsCloudResource { entityType subscriptionId } ... on ReportParamsComplianceAssessments { frameworks { ...ReportParamsFramework } subscriptions { ...ReportParamsEntity } } ... on ReportParamsComplianceExecutiveSummary { framework { ...ReportParamsFramework } subscriptions { ...ReportParamsEntity } } ... on ReportParamsConfigurationFindings { subscriptions { ...ReportParamsEntity } entities { ...ReportParamsEntity } } ... on ReportParamsGraphQuery { query } ... on ReportParamsHostConfiguration { hostConfigurationRuleAssessmentsFilters } ... on ReportParamsIssue { issueFilters } ... on ReportParamsNetworkExposure { __typename entities { ...ReportParamsEntity } subscriptions { ...ReportParamsEntity } } ... on ReportParamsSecurityFramework { entities { ...ReportParamsEntity } subscriptions { ...ReportParamsEntity } } ... on ReportParamsVulnerabilities { type assetType filters }} fragment ReportParamsFramework on SecurityFramework { id name} fragment LastRunDetails on ReportRun { id status failedReason runAt progress results { ... on ReportRunResultsBenchmark { errorCount passedCount failedCount scannedCount } ... on ReportRunResultsGraphQuery { resultCount entityCount } ... on ReportRunResultsNetworkExposure { scannedCount publiclyAccessibleCount } ... on ReportRunResultsConfigurationFindings { findingsCount } ... on ReportRunResultsVulnerabilities { count } ... on ReportRunResultsIssues { count } ... on ReportRunResultsCloudResource { count limitReached } }}"}'
 }
 
-# Get reports list
+# Get reports list and parse data
 RESULT=$(callAPI)
-
 REPORT_ID=`echo $RESULT|jq --raw-output '.data.reports.nodes[0].id'`
 REPORT_NAME=`echo $RESULT|jq --raw-output '.data.reports.nodes[0].name'`
 REPORT_LAST_RUN=`echo $RESULT|jq --raw-output '.data.reports.nodes[0].lastRun.runAt'`
@@ -49,7 +48,7 @@ QUERY_VARS=$(cat <<EOF
 EOF
 )
 
-# Define functions
+# Define report download URL function
 function callAPI {
     curl -s -X POST $WIZ_API_ENDPOINT \
     -H "Content-Type: application/json" \
