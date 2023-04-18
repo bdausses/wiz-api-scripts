@@ -67,6 +67,10 @@ echo "Report ID:    $REPORT_ID"
 echo "Report Name:  $REPORT_NAME"
 echo "Report Date:  $REPORT_LAST_RUN"
 echo
-wget -q -O $REPORT_NAME-$REPORT_LAST_RUN.csv $REPORT_URL
 
-echo "Download complete."
+REPORT_FILENAME=$REPORT_NAME-$REPORT_LAST_RUN.csv
+wget -q -O $REPORT_FILENAME $REPORT_URL
+
+echo "Download complete.  Your file has been saved as:"
+echo "$REPORT_FILENAME"
+echo
