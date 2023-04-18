@@ -6,6 +6,8 @@
 #
 #   SERVICE_ACCOUNT_CLIENT_ID
 #   SERVICE_ACCOUNT_CLIENT_SECRET
+#   WIZ_API_ENDPOINT
+#     Example:  export WIZ_API_ENDPOINT="https://api.us20.app.wiz.io/graphql"
 #
 ############
 
@@ -26,7 +28,7 @@ EOF
 
 # Define functions
 function callAPI {
-    curl -s -X POST https://api.us20.app.wiz.io/graphql \
+    curl -s -X POST $WIZ_API_ENDPOINT \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${API_TOKEN}" \
     -d '{
@@ -43,13 +45,13 @@ REPORT_LAST_RUN=`echo $RESULT|jq --raw-output '.data.reports.nodes[0].lastRun.ru
 
 # Set query variables
 QUERY_VARS=$(cat <<EOF
-{"reportId":"0de317ec-205f-484e-aaee-d9e27c6520ac"}
+{"reportId":"${REPORT_ID}"}
 EOF
 )
 
 # Define functions
 function callAPI {
-    curl -s -X POST https://api.us20.app.wiz.io/graphql \
+    curl -s -X POST $WIZ_API_ENDPOINT \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${API_TOKEN}" \
     -d '{
