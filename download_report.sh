@@ -1,7 +1,10 @@
 #!/bin/bash
 
 ############
+# This script is an example to download a compliance detail report.
+#
 # requires 'bash, 'jq' and 'curl'
+#
 # The following Service Account credentials need to be set as environment variables:
 #
 #   SERVICE_ACCOUNT_CLIENT_ID
