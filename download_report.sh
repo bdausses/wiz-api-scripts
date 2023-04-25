@@ -12,6 +12,9 @@
 #   WIZ_API_ENDPOINT
 #     Example:  export WIZ_API_ENDPOINT="https://api.us20.app.wiz.io/graphql"
 #
+#   Note:  The service account for this script requires the Wiz API permission:
+#          Reports -> read:reports
+#
 ############
 
 # Get auth token

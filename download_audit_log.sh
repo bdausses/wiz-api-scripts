@@ -12,6 +12,9 @@
 #   WIZ_API_ENDPOINT
 #     Example:  export WIZ_API_ENDPOINT="https://api.us20.app.wiz.io/graphql"
 #
+#   Note:  The service account for this script requires the Wiz API permission:
+#          Audit -> admin:aduit
+#
 # Additionally, the "Set Variables block" can be changed to suit your needs.  In a production
 #   version of this script, this script should be modified so that these variables can be
 #   passed in via command line options.
