@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ############
-# This script is an example to download a compliance detail report.
+# This script is an example to show all of the compliance frameworks.
 #
 # requires 'bash, 'jq' and 'curl'
 #
@@ -11,9 +11,6 @@
 #   SERVICE_ACCOUNT_CLIENT_SECRET
 #   WIZ_API_ENDPOINT
 #     Example:  export WIZ_API_ENDPOINT="https://api.us20.app.wiz.io/graphql"
-#
-#   Note:  The service account for this script requires the Wiz API permission:
-#          Reports -> read:reports
 #
 ############
 
@@ -42,19 +39,3 @@ function callAPI {
 
 RESULT=$(callAPI)
 echo "${RESULT}" | jq --raw-output '.data.securityFrameworks.nodes[]'
-
-
-# If paginating on a Graph Query, then use <'quick': false> in the query variables.
-# Uncomment the following section to paginate over all the results:
-# while true; do
-#     PAGE_INFO=$(echo "${RESULT}" | jq -r '.data | .securityFrameworks | .pageInfo')
-#     HAS_NEXT_PAGE=$(echo "${PAGE_INFO}" | jq -r '.hasNextPage')
-#     if [ "$HAS_NEXT_PAGE" = true ]; then
-#         END_CURSOR=$(echo "${PAGE_INFO}" | jq -r '.endCursor')
-#         QUERY_VARS=$(echo "$QUERY_VARS" | jq --arg foo "$END_CURSOR" '. + {after: $foo}')
-#     else
-#         break
-#     fi
-#     RESULT=$(callAPI)
-#     echo "${RESULT}"
-#  done
