@@ -37,7 +37,7 @@ function callAPI {
     -H "Authorization: Bearer ${API_TOKEN}" \
     -d '{
     "variables": '"$QUERY_VARS"',
-    "query": "query ProjectsTable($filterBy: ProjectFilters, $first: Int, $after: String, $orderBy: ProjectOrder, $analyticsSelection: ProjectIssueAnalyticsSelection) { projects(filterBy: $filterBy, first: $first, after: $after, orderBy: $orderBy) { nodes { id name slug cloudAccountCount repositoryCount kubernetesClusterCount containerRegistryCount securityScore archived businessUnit description riskProfile { businessImpact } issueAnalytics(selection: $analyticsSelection) { issueCount scopeSize informationalSeverityCount lowSeverityCount mediumSeverityCount highSeverityCount criticalSeverityCount } } pageInfo { hasNextPage endCursor } totalCount LBICount MBICount HBICount }}"}'
+    "query": "query projectsTable($filterBy: ProjectFilters, $first: Int, $after: String, $orderBy: ProjectOrder, $analyticsSelection: ProjectIssueAnalyticsSelection) { projects(filterBy: $filterBy, first: $first, after: $after, orderBy: $orderBy) { nodes { id name slug cloudAccountCount repositoryCount kubernetesClusterCount containerRegistryCount securityScore archived businessUnit description riskProfile { businessImpact } issueAnalytics(selection: $analyticsSelection) { issueCount scopeSize informationalSeverityCount lowSeverityCount mediumSeverityCount highSeverityCount criticalSeverityCount } } pageInfo { hasNextPage endCursor } totalCount LBICount MBICount HBICount }}"}'
 }
 
 RESULT=$(callAPI)
