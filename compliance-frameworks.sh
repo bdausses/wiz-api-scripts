@@ -12,6 +12,9 @@
 #   WIZ_API_ENDPOINT
 #     Example:  export WIZ_API_ENDPOINT="https://api.us20.app.wiz.io/graphql"
 #
+#   NOTE:  In this example, I am searching for a compliance framework named "CIS Azure 2.0.0".
+#          You will want to change this to whatever it is that you are searching for.
+#
 ############
 
 # Get auth token
@@ -24,7 +27,7 @@ API_TOKEN=$(curl -s -X POST https://auth.app.wiz.io/oauth/token \
 --data-urlencode 'audience=wiz-api' | jq -r '.access_token')
 
 QUERY_VARS=$(cat <<EOF
-{"first":500,"filterBy":{}}
+{"first":100,"filterBy":{"search":"CIS Azure 2.0.0"}}
 EOF
 )
 
